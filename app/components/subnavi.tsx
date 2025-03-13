@@ -2,46 +2,43 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { useState } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import Logo from "@/app/images/PROPTECH_logo_alex_logo-3_alex_logo-3.png";
 
-// Define navItems with links and dropdowns
+// Updated navItems array: Notice that "Partners" is placed after "Investor Pitch" and contains the "Media Partners" link.
 const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { 
-    name: 'Conference', 
-    href: '#',
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  {
+    name: "Conference",
+    href: "#",
     dropdown: [
-      { name: 'About the Conference', href: '/conference/about' },
-      { name: 'Participants', href: '/conference/participants' },
-      { name: 'Speakers', href: '/conference/speakers' },
-      { name: 'Apply for Speaking', href: '/conference/apply' },
-    ]
+      { name: "About the Conference", href: "/conference/about" },
+      { name: "Participants", href: "/conference/participants" },
+      { name: "Speakers", href: "/conference/speakers" },
+      { name: "Apply for Speaking", href: "/conference/apply" },
+    ],
   },
-  { 
-    name: 'Exhibition', 
-    href: '#',
+  {
+    name: "Exhibition",
+    href: "#",
     dropdown: [
-      { name: 'About the Exhibition', href: '/exhibition/about' },
-      { name: 'Exhibitors', href: '/exhibition/exhibitors' },
-      { name: 'Information Brochure', href: '/exhibition/brochure' },
-      { name: 'Exhibit at #pts25', href: '/exhibition/exhibit' },
-    ]
+      { name: "About the Exhibition", href: "/exhibition/about" },
+      { name: "Exhibitors", href: "/exhibition/exhibitors" },
+      { name: "Information Brochure", href: "/exhibition/brochure" },
+      { name: "Exhibit at #pts25", href: "/exhibition/exhibit" },
+    ],
   },
-  { 
-    name: 'Partners', 
-    href: '#',
+  { name: "Investor Pitch", href: "/investor-pitch" },
+  {
+    name: "Partners",
+    href: "#",
     dropdown: [
-      { name: 'Previous Partners', href: '/partners/previous' },
-      { name: 'Media Partners', href: '/partners/media' },
-      { name: 'Previous Media Partners', href: '/partners/previous-media' },
-      { name: 'Become a Partner', href: '/partners/become' },
-    ]
+      { name: "Media Partners", href: "/partners/media" },
+    ],
   },
-  { name: 'Investor Pitch', href: '/investor-pitch' },
-  { name: 'Get in Tech', href: '/register' },
+  { name: "Get in Tech", href: "/register" },
 ];
 
 export default function Header() {
@@ -58,12 +55,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <Image
-                src={Logo}
-                alt="Proptech Expo 2025 Logo"
-                width={150}
-                height={30}
-              />
+              <Image src={Logo} alt="Proptech Expo 2025 Logo" width={150} height={30} />
               <span className="sr-only">Proptech Expo 2025</span>
             </Link>
           </div>
@@ -75,14 +67,19 @@ export default function Header() {
                     <>
                       <button
                         onClick={() => toggleDropdown(item.name)}
-                        className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center"
+                        className="text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center gap-1"
                       >
                         {item.name}
                         <ChevronDown className="ml-1 h-4 w-4" />
                       </button>
                       {activeDropdown === item.name && (
-                        <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                          <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                          <div
+                            className="py-1"
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-labelledby="options-menu"
+                          >
                             {item.dropdown.map((dropdownItem) => (
                               <Link
                                 key={dropdownItem.name}
@@ -146,7 +143,7 @@ export default function Header() {
                   <>
                     <button
                       onClick={() => toggleDropdown(item.name)}
-                      className="text-white hover:text-blue-600  px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center"
+                      className="text-white hover:text-blue-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center"
                     >
                       {item.name}
                       <ChevronDown className="h-4 w-4" />
@@ -183,4 +180,3 @@ export default function Header() {
     </header>
   );
 }
-

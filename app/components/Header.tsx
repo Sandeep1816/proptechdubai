@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import Logo from '@/app/images/PROPTECH_logo_alex_logo-3_alex_logo-3.png';
 
+// Updated navItems array: After "Investor Pitch", we've added a "Partners" item with a dropdown containing "Media Partners".
 const navItems = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
@@ -24,6 +25,12 @@ const navItems = [
     ],
   },
   { name: 'Investor Pitch', href: '/investor-pitch' },
+  {
+    name: 'Partners',
+    dropdown: [
+      { name: 'Media Partners', href: '/partners/media' },
+    ],
+  },
   { name: 'Blogs', href: '/blogs' },
   { name: 'Get in Touch', href: '/register' },
 ];
@@ -59,7 +66,12 @@ export default function Header() {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <Image src={Logo} alt="Proptech Expo 2025 Logo" width={150} height={30} />
+              <Image
+                src={Logo}
+                alt="Proptech Expo 2025 Logo"
+                width={150}
+                height={30}
+              />
               <span className="sr-only">Proptech Expo 2025</span>
             </Link>
           </div>
@@ -78,24 +90,32 @@ export default function Header() {
                   <button
                     className="text-white px-3 py-2 rounded-md text-sm font-medium flex items-center gap-1"
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent immediate closing
+                      e.stopPropagation();
                       setDesktopDropdownOpen(desktopDropdownOpen === item.name ? null : item.name);
                     }}
                   >
                     {item.name} <ChevronDown className="h-4 w-4" />
                   </button>
                   {desktopDropdownOpen === item.name && (
-                    <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2">
-                      {item.dropdown.map((subItem) => (
-                        <Link
-                          key={subItem.name}
-                          href={subItem.href}
-                          className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                          onClick={() => setDesktopDropdownOpen(null)} // Close dropdown after selection
-                        >
-                          {subItem.name}
-                        </Link>
-                      ))}
+                    <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                      <div
+                        className="py-1"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="options-menu"
+                      >
+                        {item.dropdown.map((dropdownItem) => (
+                          <Link
+                            key={dropdownItem.name}
+                            href={dropdownItem.href}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            role="menuitem"
+                            onClick={() => setDesktopDropdownOpen(null)}
+                          >
+                            {dropdownItem.name}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -135,7 +155,7 @@ export default function Header() {
               className="text-white"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <X className="block h-6 w-6" />
+              <X className="block h-6 w-6" aria-hidden="true" />
               <span className="sr-only">Close main menu</span>
             </button>
           </div>
@@ -144,26 +164,26 @@ export default function Header() {
               item.dropdown ? (
                 <div key={item.name} className="px-3 py-2">
                   <button
-                    className="text-white text-base font-medium w-full text-left flex items-center justify-between"
                     onClick={() =>
                       setMobileDropdownOpen(mobileDropdownOpen === item.name ? null : item.name)
                     }
+                    className="text-white text-base font-medium w-full text-left flex items-center justify-between"
                   >
                     {item.name} <ChevronDown className="h-4 w-4" />
                   </button>
                   {mobileDropdownOpen === item.name && (
                     <div className="pl-4 mt-2 bg-white rounded-md shadow-md py-2">
-                      {item.dropdown.map((subItem) => (
+                      {item.dropdown.map((dropdownItem) => (
                         <Link
-                          key={subItem.name}
-                          href={subItem.href}
-                          className="block px-3 py-2 text-gray-800 hover:bg-blue-100"
+                          key={dropdownItem.name}
+                          href={dropdownItem.href}
+                          className="text-white hover:text-blue-600 block px-3 py-2 rounded-md text-sm"
                           onClick={() => {
                             setMobileDropdownOpen(null);
                             setMobileMenuOpen(false);
                           }}
                         >
-                          {subItem.name}
+                          {dropdownItem.name}
                         </Link>
                       ))}
                     </div>
@@ -173,7 +193,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-white hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
